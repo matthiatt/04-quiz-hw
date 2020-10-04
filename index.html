@@ -3,18 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Homework 4 - Quiz</title>
-    <link rel="stylesheet" href="style.css" type="text/css">
-    <link rel="stylesheet" href="reset.css" type="text/css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="reset.css">
+    <title>Document</title>
 </head>
 <body>
-    <div class="container">
-        <div id="home" class="flex-center flex column">
-            <h1>Quiz</h1>
-            <div a class="btn" href="index.html">Start Quiz Now</a></div>
-            <div a class="btn" href="highscores-api.html">High-Score List</a></div>
+    <div id="quiz">
+        <h1 id="quiz-name"></h1>
+        <button id="submit-button">Submit Answers</button>
+        <button id="next-question-button">Next Question</button>
+        <button id="prev-question-button">Previous</button>
+        
+        <div id="quiz-results">
+          <p id="quiz-results-message"></p>
+          <p id="quiz-results-score"></p>
         </div>
-    </div>
-    <script src="script.js"></script>
+      </div>
+    <style src="logic.js"></style>
 </body>
 </html>
