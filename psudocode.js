@@ -1,13 +1,28 @@
-//---------------HTML----------------
-//.1) Define background to foreground by creating space to distinguish one from another. Example: create a box that's 4 - 6 rows and 8 - 10 columns placed in the middles of the page.
-//----------This box shouldn't take up more than 1/3 of the page when placed in the middle. The background should have the remaining 1/3 of the space up top, above the box just created, as well as below.
-//2.) The header should be placed sitting/nesting on this box that was just created - to the far left.
-//3.) There should be 3 buttons placed below the box created on step 1.  First button should be, "Previous", the next should be "Next Question", and the final button should be called "Submit Answers".
-//-------------------------------------------
-//JavaScript-----------------------------
-//1.) Create a variable for "allQuestions" in an array followed with an object decloration
-//2.) Next, declare "choices" followed by another object decloration
-//3.) After that, make a correct catigory with the correct answer that follows
-//4.) Then create a wrong catigory with an array of 3 answers that are not the true answer.
-//5.) repeat this step as many times as needed.
-//6.) 
+//1.) get questions to work first - reference: LookMaNoHTML VSCode, tip: appending into HTML
+//2.) get the scores and other var's to work in suite
+//3.) get the time to work
+//-------------------------------------------------------------------------------------------------------------------
+//Declare function .timeEL - call Jquary
+//Declare function global var's - userscore, container, high-score, 
+//Button with toggle(logic) to start quiz and timer.
+//Quiz timer starts - setInterval(sumFunction, seconds*1000) 
+//Declare sumFunction [array of object(s)] - questions, options, and/or [booleans]: Each question is an object, its on set of {}
+//Append elements in array based on index
+//Array starts - indentify for loop, i>x, i++. (doesnt have to be ">" symbol) Use == to have a True or false anwser.
+//--------------------------------------------------------------------------------------------------------------------
+
+// Declare global var: correct, wrong, container, highscore, time
+
+// When webpage loads, want to see view highscores, timer, score, and intro page
+// Declare toggle function to change intro to quiz display & trigger timer via start button
+    // toggle .add("hide")/.remove("hide")
+
+// Timer starts --> setInterval(someFunction, seconds*1000)
+
+// Declare someFunction
+    // Declare array of objects (rep questions) consisting of options & boolean
+
+    // Loop through array --> for (var i=0; i<array.length; i++) {
+        // One Question
+        // Use If/else
+        // userScore ++/--
