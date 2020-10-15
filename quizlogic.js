@@ -14,32 +14,54 @@ submitButton.addEventListener("click", showResults);
 //Next, after I built my basic structure of my quiz, I must structure the logic I want displayed in question format.
 const myQuestions = [
     {
-      question: "Who invented JavaScript?",
+      question: "What is the highest-grossing film of all time without taking inflation into account?",
       answers: {
-        a: "Douglas Crockford",
-        b: "Sheryl Sandberg",
-        c: "Brendan Eich"
+        a: "Titanic",
+        b: "Avengers: Endgame",
+        c: "Star Wars: The Force Awakens",
+        d: "Avatar"
+      },
+      correctAnswer: "b"
+    },
+    {
+      question: "Which film did Steven Spielberg win his first Oscar for Best Director?",
+      answers: {
+        a: "Jaws",
+        b: "Catch Me If You Can",
+        c: "Schindler’s List",
+        d: "E.T."
       },
       correctAnswer: "c"
     },
     {
-      question: "Which one of these is a JavaScript package manager?",
+      question: "What is the name of Quint’s shark-hunting boat in Jaws?",
       answers: {
-        a: "Node.js",
-        b: "TypeScript",
-        c: "npm"
+        a: "The Whale",
+        b: "The Orca",
+        c: "The Shark",
+        d: "The Dolphin"
       },
-      correctAnswer: "c"
+      correctAnswer: "b"
     },
     {
-      question: "Which tool can you use to ensure code quality?",
+      question: "What short film featured Mickey Mouse’s first appearance?",
       answers: {
-        a: "Angular",
-        b: "jQuery",
-        c: "RequireJS",
-        d: "ESLint"
+        a: "Plane Crazy",
+        b: "Wild Waves",
+        c: "The Band Concert",
+        d: "The Barnyard Concert"
       },
-      correctAnswer: "d"
+      correctAnswer: "a"
+    },
+    {
+      question: "As the Disney princess with the fewest lines, how many lines did Aurora (or “Sleeping Beauty”) have in total?",
+      answers: {
+        a: "11",
+        b: "15",
+        c: "18",
+        d: "20"
+      },
+      correctAnswer: "c"
     }
   ];
 
