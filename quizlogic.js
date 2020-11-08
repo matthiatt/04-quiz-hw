@@ -3,6 +3,9 @@ const quizContainer = document.getElementById("quiz");
 const resultsContainer = document.getElementById("results");
 const submitButton = document.getElementById("submit");
 var questionTracker = 0;
+var timeEl = document.getElementById("timer");
+var mainEl = document.getElementById("quiz");
+var secondsLeft = 10;
 
 
 //Once the submit button is push/activated - then results will show
@@ -125,11 +128,6 @@ quizBuild();
 
 
 // Setting timer for the quiz questions
-
-var timeEl = document.getElementById("timer");
-var mainEl = document.getElementById("quiz");
-
-var secondsLeft = 10;
 
 function setTime() {
   var timerInterval = setInterval(function() {
