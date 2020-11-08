@@ -1,12 +1,9 @@
+// impliment a timer for the quiz.
 const quizContainer = document.getElementById("quiz");
 const resultsContainer = document.getElementById("results");
 const submitButton = document.getElementById("submit");
+var questionTracker = 0;
 
-function quizBuild(){}
-function showResults(){}
-
-//The quiz here must be displayed right away
-quizBuild();
 
 //Once the submit button is push/activated - then results will show
 submitButton.addEventListener("click", showResults);
@@ -67,9 +64,9 @@ const myQuestions = [
 
 //Next, I am showing HOW the list of questions will be displayed on the web-page.
 function quizBuild() {
-}
+
 var output = [];
-var questionNumber = 1;
+var questionNumber = 0;
 myQuestions.forEach(function(currentQuestion) {
         const answers = [];
         for (var letter in currentQuestion.answers) {
@@ -77,16 +74,25 @@ myQuestions.forEach(function(currentQuestion) {
                 `<label>
                     <input type="radio" name="questions${questionNumber}" value = "${letter}">${letter}</input> :
                     ${currentQuestion.answers[letter]}
-                <label>`
+                </label>`
             );
         }
 
         output.push(
-            `<div class="question"> ${currentQuestion.question} </div>
-            <div class="answers"> ${answers.join('')} </div>`
+            `<div id="quizAnswerAndQuestion${questionNumber}" style = "display: none">
+            <div class="question"> ${currentQuestion.question} </div>
+            <div class="answers"> ${answers.join('')} </div>
+            </div>`
           ); questionNumber++;
     });
-
+    //showFirsstDivId here. // 92 and 87 can be the same thing. if I use the questionTracker.
+}
+    function nextQuestion() {
+      //Use question tracker to hide current <div id="quizAnswerAndQuestion${questionNumber}">
+      // incriment questionTracker by 1
+      // use questionTracker to show new current div
+      questionTracker 
+    }
 
 //Next, since I generated the whole HTML concept for each question, I am going to join everything together and display it on the page.
 quizContainer.innerHTML = output.join('');
@@ -101,21 +107,49 @@ function showResults(){
   
     myQuestions.forEach( (currentQuestion, questionNumber) => {
   
-      const answerContainer = answerContainers[questionNumber];
-      const selector = `input[name=question${questionNumber}]:checked`;
-      const userAnswer = (answerContainer.querySelector(selector) || {}).value;
-      if(userAnswer === currentQuestion.correctAnswer){
+      var selector = `input[name='questions${questionNumber}']:checked`;
+      var userAnswer = document.querySelector(selector);
+      if(userAnswer.value === currentQuestion.correctAnswer){
         numCorrect++;
-        answerContainers[questionNumber].style.color = 'lightblue';
+        userAnswer.parentElement.style.color = 'lightblue';
       }
       else{
-        answerContainers[questionNumber].style.color = 'red';
+        userAnswer.parentElement.style.color = 'red';
       }
     });
 
     resultsContainer.innerHTML = `${numCorrect} out of ${myQuestions.length}`;
   }
-const answerContainers = quizContainer.querySelectorAll('.answers');
+//The quiz here must be displayed right away
+quizBuild();
 
-//Tracks the user's answers
-let numCorrect = 0;
+
+// Setting timer for the quiz questions
+
+var timeEl = document.getElementById("timer");
+var mainEl = document.getElementById("quiz");
+
+var secondsLeft = 10;
+
+function setTime() {
+  var timerInterval = setInterval(function() {
+    secondsLeft--;
+    timeEl.textContent = secondsLeft + " seconds left to answer the question.";
+
+    if(secondsLeft === 0) {
+      clearInterval(timerInterval);
+      sendMessage();
+    }
+
+  }, 1000);
+}
+
+function sendMessage() {
+  timeEl.textContent = "Time is up";
+
+  var pEl = document.createElement("p");
+  mainEl.appendChild(pEl);
+
+}
+
+setTime();
