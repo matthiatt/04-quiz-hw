@@ -1,18 +1,27 @@
-// impliment a timer for the quiz.
-const quizContainer = document.getElementById("quiz");
-const resultsContainer = document.getElementById("results");
-const submitButton = document.getElementById("submit");
-var questionTracker = 0;
+var body = document.body;
+var questionBody = document.getElementById("questionContents");
+var displayScore = document.getElementById("score");
+var quizContainer = document.getElementById("quiz");
+var resultsContainer = document.getElementById("results");
+var submitButton = document.getElementById("submit");
 var timeEl = document.getElementById("timer");
 var mainEl = document.getElementById("quiz");
+var button1 = document.getElementById("button1");
+var button2 = document.getElementById("button2");
+var button3 = document.getElementById("button3");
+var button4 = document.getElementById("button4");
 var secondsLeft = 10;
+var questionTracker = 0;
+var allScores = [];
+var count = 40;
+var score = 0;
+var currentQuestion = 0;
+var countDownTimer;
 
 
-//Once the submit button is push/activated - then results will show
 submitButton.addEventListener("click", showResults);
 
-//Next, after I built my basic structure of my quiz, I must structure the logic I want displayed in question format.
-const myQuestions = [
+var myQuestions = [
     {
       question: "What is the highest-grossing film of all time without taking inflation into account?",
       answers: {
@@ -62,79 +71,135 @@ const myQuestions = [
         d: "20"
       },
       correctAnswer: "c"
-    }
-  ];
+    }];
+
 
 //Next, I am showing HOW the list of questions will be displayed on the web-page.
-function quizBuild() {
+// Got help with tutor on this portion.
+function quizBuild() 
+{
 
 var output = [];
 var questionNumber = 0;
-myQuestions.forEach(function(currentQuestion) {
-        const answers = [];
-        for (var letter in currentQuestion.answers) {
-            answers.push( 
-                `<label>
-                    <input type="radio" name="questions${questionNumber}" value = "${letter}">${letter}</input> :
-                    ${currentQuestion.answers[letter]}
-                </label>`
-            );
-        }
 
-        output.push(
-            `<div id="quizAnswerAndQuestion${questionNumber}" style = "display: none">
-            <div class="question"> ${currentQuestion.question} </div>
-            <div class="answers"> ${answers.join('')} </div>
-            </div>`
-          ); questionNumber++;
-    });
-    //showFirsstDivId here. // 92 and 87 can be the same thing. if I use the questionTracker.
+// function getQuestion() {
+//   var cQuestion = questions[myQuestionIndex];
+
+//   var title = document.getElementById("questionContents");
+//   title.innerHTML = '';
+
+// cQuestion.forEach(function(choiceA, i) {
+
+//   var choice = document.getElementById('buttons');
+//   choice.setAttribute("class","choice");
+//   choice.setAttribute("value", choiceA);
+
+//   choice.textContent = i + 1 + '. ' + choice.textContent;
+
+//   choice.onclick = questionClick;
+
+//   choiceEL.appendChild(choice);
+//   });
+// }
+
+  function nextQuestion() {
+  for (i = 0; i < myQuestions.length; i++) {
+    body.innerHTML = "<p>" + myQuestions[currentQuestion].question + "</p>";
+    button1.textContent = myQuestions[currentQuestion].answers.a;
+    button2.textContent = myQuestions[currentQuestion].answers.b;
+    button3.textContent = myQuestions[currentQuestion].answers.c;
+    button4.textContent = myQuestions[currentQuestion].answers.d;
 }
-    function nextQuestion() {
+  }
+  nextQuestion();
+
+function renderQuestion() {
+  var i = currentQuestion;
+  body.innerHTML = "<p>" + myQuestions[i].question + "</p>";
+  button1.textContent = myQuestions[i].answers.a;
+  button2.textContent = myQuestions[i].answers.b;
+  button3.textContent = myQuestions[i].answers.c;
+  button4.textContent = myQuestions[i].answers.d;
+}
+renderQuestion();
+
+
+        // var answers = [];
+        // for (var letter in currentQuestion.answers) 
+    //     {
+    //         answers.push( 
+    //             `<label>
+    //                 <input type="radio" name="questions${questionNumber}" value = "${letter}">${letter}</input> :
+    //                 ${currentQuestion.answers[letter]}
+    //             </label>`
+    //         );
+    //     }
+
+    //     output.push(
+    //         `<div id="quizAnswerAndQuestion${questionNumber}" style = "display: none">
+    //         <div class="question"> ${currentQuestion.question} </div>
+    //         <div class="answers"> ${answers.join('')} </div>
+    //         </div>`
+    //       ); questionNumber++;
+    // });
+    //   document.getElementById("quizAnswerAndQuestion" + questionTracker ).style.display = "none";
+    //   questionTracker++;
+    //   document.getElementById("quizAnswerAndQuestion" + questionTracker ).style.display = "block";
+      // questionTracker.foreachQuestion(myQuestions);
+      // output.push(
+      //       `<div id="quizAnswerAndQuestion${questionNumber}" style = "display: none">`
+      // var q1 = document.getElementById("question1").innerHTML += index;
       //Use question tracker to hide current <div id="quizAnswerAndQuestion${questionNumber}">
       // incriment questionTracker by 1
       // use questionTracker to show new current div
-      questionTracker 
+      // ); questionTracker++;
     }
 
 //Next, since I generated the whole HTML concept for each question, I am going to join everything together and display it on the page.
-quizContainer.innerHTML = output.join('');
+// quizContainer.innerHTML = output.join('');
 
 //Now I need to be able to show my results based on the function loop and check them.
 
-function showResults(){
-
-    const answerContainers = quizContainer.querySelectorAll('.answers');
+function showResults() 
+{
+    var answerContainers = quizContainer.querySelectorAll('.answers');
+    var numCorrect = 0;
+    for (var i = 0; i < myQuestions.length; i++);
   
-    let numCorrect = 0;
-  
-    myQuestions.forEach( (currentQuestion, questionNumber) => {
-  
+    function myQuestions(currentQuestion, questionNumber) 
+    {
+    
       var selector = `input[name='questions${questionNumber}']:checked`;
       var userAnswer = document.querySelector(selector);
-      if(userAnswer.value === currentQuestion.correctAnswer){
+      if(userAnswer.value === currentQuestion.correctAnswer)
+      {
         numCorrect++;
+        score++;
         userAnswer.parentElement.style.color = 'lightblue';
       }
-      else{
+      else
+      {
         userAnswer.parentElement.style.color = 'red';
       }
-    });
+    }
 
     resultsContainer.innerHTML = `${numCorrect} out of ${myQuestions.length}`;
   }
 //The quiz here must be displayed right away
-quizBuild();
+// quizBuild();
 
+// Ask tutor why this is not working.
 
-// Setting timer for the quiz questions
+function setTime() 
+{
 
-function setTime() {
-  var timerInterval = setInterval(function() {
+  var timerInterval = setInterval(function() 
+  {
     secondsLeft--;
     timeEl.textContent = secondsLeft + " seconds left to answer the question.";
 
-    if(secondsLeft === 0) {
+    if(secondsLeft === 0) 
+    {
       clearInterval(timerInterval);
       sendMessage();
     }
@@ -142,8 +207,9 @@ function setTime() {
   }, 1000);
 }
 
-function sendMessage() {
-  timeEl.textContent = "Time is up";
+function sendMessage() 
+{
+  timeEl.textContent = "Time is up, try again!";
 
   var pEl = document.createElement("p");
   mainEl.appendChild(pEl);
@@ -151,3 +217,7 @@ function sendMessage() {
 }
 
 setTime();
+
+function scoreboard() {
+
+}
