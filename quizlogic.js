@@ -2,14 +2,22 @@ var body = document.body;
 var questionBody = document.getElementById("questionContents");
 var displayScore = document.getElementById("score");
 var quizContainer = document.getElementById("quiz");
-var resultsContainer = document.getElementById("results");
+// var highScoresList = document.getElementById("highScoresList"); // need to refer it in JS.
+var resultsContainer = document.getElementById("results"); //need this in html
+var startButton = document.getElementById("start");
+var questionsElement = document.getElementById("questions");
 var submitButton = document.getElementById("submit");
-var timeEl = document.getElementById("timer");
-var mainEl = document.getElementById("quiz");
+var choiceElement = document.getElementById("choices"); // need to call this in the document somewhere
+// var timeEl = document.getElementById("timer");
+// var mainEl = document.getElementById("quiz");
+var timerElement = document.getElementById("timer");
 var button1 = document.getElementById("button1");
 var button2 = document.getElementById("button2");
 var button3 = document.getElementById("button3");
 var button4 = document.getElementById("button4");
+var buttonChoices = document.getElementById("buttonChoices");
+var initialsElement = document.getElementById("initials"); // add in HTML
+var returnFeedback = document.getElementById("feedback"); // add in HTML
 var secondsLeft = 10;
 var questionTracker = 0;
 var allScores = [];
@@ -17,9 +25,12 @@ var count = 40;
 var score = 0;
 var currentQuestion = 0;
 var countDownTimer;
+var time = 60000;
+// var time = myQuestions.length * 20;
+// var legnth = 
+var myQuestionsIndex = 0;
 
-
-submitButton.addEventListener("click", showResults);
+// submitButton.addEventListener("click", showResults);
 
 var myQuestions = [
     {
@@ -76,52 +87,154 @@ var myQuestions = [
 
 //Next, I am showing HOW the list of questions will be displayed on the web-page.
 // Got help with tutor on this portion.
-function quizBuild() 
+// function quizBuild() 
+// {
+
+function startQuiz() 
+{
+  // var startScreenEl = document.getElementById("start-screen");
+  // startScreenEl.setAttribute("class", "hide");
+  questionsElement.removeAttribute("class");
+  timerId = setInterval(timingInterval, 1000);
+  timerElement.textContent = time;
+}
+
+// var output = [];
+// var questionNumber = 0;
+
+function getQuestion() 
+{
+  var cQuestion = myQuestions[myQuestionsIndex];
+
+cQuestion.forEach(function(choiceA, i) 
 {
 
-var output = [];
-var questionNumber = 0;
+  var choice = document.getElementById('buttons');
+  choice.setAttribute("class","choice");
+  choice.setAttribute("value", choiceA);
 
-// function getQuestion() {
-//   var cQuestion = questions[myQuestionIndex];
+  var title = document.getElementById("buttonChoices");
+  title.innerHTML = '';
 
-//   var title = document.getElementById("questionContents");
-//   title.innerHTML = '';
+  choice.textContent = i + 1 + '. ' + choice.textContent;
 
-// cQuestion.forEach(function(choiceA, i) {
+  choice.onclick = questionClick;
 
-//   var choice = document.getElementById('buttons');
-//   choice.setAttribute("class","choice");
-//   choice.setAttribute("value", choiceA);
-
-//   choice.textContent = i + 1 + '. ' + choice.textContent;
-
-//   choice.onclick = questionClick;
-
-//   choiceEL.appendChild(choice);
-//   });
-// }
-
-  function nextQuestion() {
-  for (i = 0; i < myQuestions.length; i++) {
-    body.innerHTML = "<p>" + myQuestions[currentQuestion].question + "</p>";
-    button1.textContent = myQuestions[currentQuestion].answers.a;
-    button2.textContent = myQuestions[currentQuestion].answers.b;
-    button3.textContent = myQuestions[currentQuestion].answers.c;
-    button4.textContent = myQuestions[currentQuestion].answers.d;
+  choiceElement.appendChild(choice);
+  });
 }
+
+function questionClick() 
+{   
+  if (this.value !== myQuestions[myQuestionsIndex].answer) 
+  {
+    time -= 15;
+    if (time < 0) 
+    {time = 0;
+    }
+    timerElement.textContent = time;
+  
+    returnFeedback.setAttribute("class", "feedback");
+  setTimeout(function() 
+  {
+    returnFeedback.setAttribute("class", "feedback hide");
+  }, 1000);
+
+  myQuestionIndex ++;
+
+  if(myQuestionIndex === myQuestions.length)
+  {
+    quizEnd();
+  }else
+  {
+    getQuestion();
   }
-  nextQuestion();
+  }}
 
-function renderQuestion() {
-  var i = currentQuestion;
-  body.innerHTML = "<p>" + myQuestions[i].question + "</p>";
-  button1.textContent = myQuestions[i].answers.a;
-  button2.textContent = myQuestions[i].answers.b;
-  button3.textContent = myQuestions[i].answers.c;
-  button4.textContent = myQuestions[i].answers.d;
+  function quizEnd()
+  {
+    clearTime(setTime);
+
+    var completeScreen = document.getElementById("endResult");
+  completeScreen.removeAttribute("class");
+
+    var finalScoreScreen = document.getElementById("finalScore");
+  finalScoreScreen.textContent = time;
+
+    questionsElement.setAttribute("class", "hide");
 }
-renderQuestion();
+
+function timingInterval() 
+{
+  time--;
+  timerElement.textContent = time;
+  if (time <= 0) 
+  {
+    quizEnd();
+  }
+}
+
+function saveHighscore() 
+{
+  var initials = initialsElement;
+
+  if (initials !== "") 
+  {
+    var highscores =
+      JSON.parse(window.localStorage.getItem("highscores")) || [];
+
+    var newScore = 
+    {
+      score: time,
+      initials: initials
+    };
+
+    highscores.push(newScore);
+    window.localStorage.setItem("highscores", JSON.stringify(highscores));
+
+    window.location.href = "highscores.html";
+  }
+  // button.addEventListener('click', saveHighscore);
+}
+
+function check(event) 
+{
+  if (event.key === "Enter") 
+  {
+    saveHighscore();
+  }
+}
+
+submitButton.onclick = saveHighscore;
+
+startButton.onclick = startQuiz;
+
+// initialsEl.onkeyup = check;
+    // display new time on page    timerElement.textContent = time;
+//   function nextQuestion() {
+//   for (i = 0; i < myQuestions.length; i++) {
+//     body.innerHTML = "<p>" + myQuestions[currentQuestion].question + "</p>";
+//     // button1.
+//     textContent = myQuestions[currentQuestion].answers.a;
+//     // button2.
+//     textContent = myQuestions[currentQuestion].answers.b;
+//     // button3.
+//     textContent = myQuestions[currentQuestion].answers.c;
+//     // button4.
+//     textContent = myQuestions[currentQuestion].answers.d;
+// }
+//   }
+//   nextQuestion();
+
+// function renderQuestion() {
+//   var i = currentQuestion;
+//   body.innerHTML = "<p>" + myQuestions[i].question + "</p>";
+//   button1.textContent = myQuestions[i].answers.a;
+//   button2.textContent = myQuestions[i].answers.b;
+//   button3.textContent = myQuestions[i].answers.c;
+//   button4.textContent = myQuestions[i].answers.d;
+// }
+// renderQuestion();
 
 
         // var answers = [];
@@ -153,71 +266,71 @@ renderQuestion();
       // incriment questionTracker by 1
       // use questionTracker to show new current div
       // ); questionTracker++;
-    }
+    // }
 
 //Next, since I generated the whole HTML concept for each question, I am going to join everything together and display it on the page.
 // quizContainer.innerHTML = output.join('');
 
 //Now I need to be able to show my results based on the function loop and check them.
 
-function showResults() 
-{
-    var answerContainers = quizContainer.querySelectorAll('.answers');
-    var numCorrect = 0;
-    for (var i = 0; i < myQuestions.length; i++);
+// function showResults() 
+// {
+//     var answerContainers = quizContainer.querySelectorAll('.answers');
+//     var numCorrect = 0;
+//     for (var i = 0; i < myQuestions.length; i++);
   
-    function myQuestions(currentQuestion, questionNumber) 
-    {
+//     function myQuestions(currentQuestion, questionNumber) 
+//     {
     
-      var selector = `input[name='questions${questionNumber}']:checked`;
-      var userAnswer = document.querySelector(selector);
-      if(userAnswer.value === currentQuestion.correctAnswer)
-      {
-        numCorrect++;
-        score++;
-        userAnswer.parentElement.style.color = 'lightblue';
-      }
-      else
-      {
-        userAnswer.parentElement.style.color = 'red';
-      }
-    }
+//       var selector = `input[name='questions${questionNumber}']:checked`;
+//       var userAnswer = document.querySelector(selector);
+//       if(userAnswer.value === currentQuestion.correctAnswer)
+//       {
+//         numCorrect++;
+//         score++;
+//         userAnswer.parentElement.style.color = 'lightblue';
+//       }
+//       else
+//       {
+//         userAnswer.parentElement.style.color = 'red';
+//       }
+//     }
 
-    resultsContainer.innerHTML = `${numCorrect} out of ${myQuestions.length}`;
-  }
+//     resultsContainer.innerHTML = `${numCorrect} out of ${myQuestions.length}`;
+//   }
 //The quiz here must be displayed right away
 // quizBuild();
 
 // Ask tutor why this is not working.
 
-function setTime() 
-{
+// function setTime() 
+// {
 
-  var timerInterval = setInterval(function() 
-  {
-    secondsLeft--;
-    timeEl.textContent = secondsLeft + " seconds left to answer the question.";
+//   var timerInterval = setInterval(function() 
+//   {
+//     secondsLeft--;
+//     timeEl.textContent = secondsLeft + " seconds left to answer the question.";
 
-    if(secondsLeft === 0) 
-    {
-      clearInterval(timerInterval);
-      sendMessage();
-    }
+//     if(secondsLeft === 0) 
+//     {
+//       clearTime(timerInterval);
+//       sendMessage();
+//     }
 
-  }, 1000);
-}
+//   }, 1000);
+// }
 
-function sendMessage() 
-{
-  timeEl.textContent = "Time is up, try again!";
+// function sendMessage() 
+// {
+//   timeEl.textContent = "Time is up, try again!";
 
-  var pEl = document.createElement("p");
-  mainEl.appendChild(pEl);
+//   var pEl = document.createElement("p");
+//   mainEl.appendChild(pEl);
 
-}
+// }
 
-setTime();
+// setTime();
 
-function scoreboard() {
+// function scoreboard() {
 
-}
+// }

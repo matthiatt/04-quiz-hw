@@ -9,30 +9,33 @@
   </head>
   <body>
     <h1>Quiz - Homework</h1>
-    <div>
       <div id="timer"></div>
       <div id="score"></div>
+      <button id="start">Start Quiz</button>
     </div>
     <div>
       <div id="questionContents">
         <div class="row" id="quiz">
-          <section id="buttons">
+          <div id="questions"></div>
+          <section id="buttonChoices">
+            <div id= "choices">
             <div input="radio" class="btnChoice" id="button1"></div>
             <div input="radio" class="btnChoice" id="button2"></div>
             <div input="radio" class="btnChoice" id="button3"></div>
             <div input="radio" class="btnChoice" id="button4"></div>
           </section>
+          </div>
         </div>
       </div>
     </div>
+    <div id="startBtn"></div>
+    <div id="finalScore"></div>
+    <div id="endResult"></div>
     <div>
       <button id="submit">Submit Quiz</button>
     </div>
     <div>
-      <button id="nextQuestionBtn"></button>
-      <button id="previousQuestionBtn"></button>
     </div>
-    <div id="results"></div>
     <script src="quizlogic.js"></script>
   </body>
 </html>
