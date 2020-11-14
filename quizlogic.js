@@ -3,7 +3,7 @@ var questionBody = document.getElementById("questionContents");
 var displayScore = document.getElementById("score");
 var quizContainer = document.getElementById("quiz");
 // var highScoresList = document.getElementById("highScoresList"); // need to refer it in JS.
-var resultsContainer = document.getElementById("results"); //need this in html
+var resultsContainer = document.getElementById("results");
 var startButton = document.getElementById("start");
 var questionsElement = document.getElementById("questions");
 var submitButton = document.getElementById("submit");
@@ -109,18 +109,18 @@ function getQuestion()
 cQuestion.forEach(function(choiceA, i) 
 {
 
-  var choice = document.getElementById('buttons');
-  choice.setAttribute("class","choice");
-  choice.setAttribute("value", choiceA);
+  var userChoice = document.getElementById('buttons');
+  userChoice.setAttribute("class","choice");
+  userChoice.setAttribute("value", choiceA);
 
   var title = document.getElementById("buttonChoices");
   title.innerHTML = '';
 
-  choice.textContent = i + 1 + '. ' + choice.textContent;
+  userChoice.textContent = i + 1 + '. ' + userChoice.textContent;
 
-  choice.onclick = questionClick;
+  userChoice.onclick = questionClick;
 
-  choiceElement.appendChild(choice);
+  choiceElement.appendChild(userChoice);
   });
 }
 
@@ -177,7 +177,6 @@ function timingInterval()
 function saveHighscore() 
 {
   var initials = initialsElement;
-
   if (initials !== "") 
   {
     var highscores =
@@ -191,7 +190,6 @@ function saveHighscore()
 
     highscores.push(newScore);
     window.localStorage.setItem("highscores", JSON.stringify(highscores));
-
     window.location.href = "highscores.html";
   }
   // button.addEventListener('click', saveHighscore);
@@ -199,7 +197,7 @@ function saveHighscore()
 
 function check(event) 
 {
-  if (event.key === "Enter") 
+  if (event.keyEvent === "Enter") 
   {
     saveHighscore();
   }
