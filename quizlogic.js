@@ -23,7 +23,7 @@ var count = 40;
 var score = 0;
 var currentQuestion = 0;
 var countDownTimer;
-var time = 60000;
+var time = 45;
 var timerId;
 var myQuestionsIndex = 0;
 var myQuestions = [
@@ -107,23 +107,26 @@ function questionClick() {
   errorText.innerText = "";
   if (userAnswer === "") {
     errorText.innerText = "Please select an answer.";
-  }
-  if (userAnswer !== myQuestions[myQuestionsIndex].correctAnswer) {
-    time -= 15;
-    if (time < 0) {
-      time = 0;
+  } else {
+    if (userAnswer !== myQuestions[myQuestionsIndex].correctAnswer) {
+      time -= 3;
+      if (time <= 0) {
+        errorText.innerText = "Time has expired, SLOW, so sad";
+        quizEnd();
+        time = 0;
+      }
+      timerElement.textContent = time;
+    } else {
+      score++;
     }
-    timerElement.textContent = time;
-  } else {
-    score++;
-  }
 
-  myQuestionsIndex++;
+    myQuestionsIndex++;
 
-  if (myQuestionsIndex === myQuestions.length) {
-    quizEnd();
-  } else {
-    getQuestion();
+    if (myQuestionsIndex === myQuestions.length) {
+      quizEnd();
+    } else {
+      getQuestion();
+    }
   }
 }
 
@@ -144,7 +147,7 @@ function quizEnd() {
   clearInterval(timerId);
 
   var finalScoreScreen = document.getElementById("finalScore");
-  finalScoreScreen.textContent = score;
+  finalScoreScreen.textContent = "Your final score is " + score;
 
   questionBody.setAttribute("class", "hidden");
   submitButton.removeAttribute("class");
@@ -154,6 +157,8 @@ function timingInterval() {
   time--;
   timerElement.textContent = time;
   if (time <= 0) {
+    var errorText = document.getElementById("lbl-error");
+    errorText.innerText = "Time has expired, SLOW, so sad";
     quizEnd();
   }
 }
