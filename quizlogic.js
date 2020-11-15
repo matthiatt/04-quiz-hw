@@ -163,7 +163,11 @@ function saveHighscore() {
 
     highscores.push(newScore);
     window.localStorage.setItem("highscores", JSON.stringify(highscores));
-    window.location.href = "highscores.html";
+    // This redirect is used to display highscores.
+    // window.location.href = "highscores.html";
+    var divFinal = document.getElementById("div-Final");
+    var homeLink = document.getElementById("home");
+    divFinal.setAttribute("class", "hidden");
   } else {
     var errorText = document.getElementById("lbl-error");
     errorText.innerText = "Please enter your initials to submit your quiz.";
