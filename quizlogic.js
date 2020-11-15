@@ -1,11 +1,6 @@
-var body = document.body;
 var questionBody = document.getElementById("questionContents");
-var displayScore = document.getElementById("score");
-var quizContainer = document.getElementById("quiz");
-var resultsContainer = document.getElementById("results");
 var startButton = document.getElementById("start");
 var questionsElement = document.getElementById("questions");
-var submitButton = document.getElementById("submit");
 var timerElement = document.getElementById("timer");
 var button1 = document.getElementById("button1");
 var button2 = document.getElementById("button2");
@@ -15,14 +10,7 @@ var buttonlbl1 = document.getElementById("lbl-button1");
 var buttonlbl2 = document.getElementById("lbl-button2");
 var buttonlbl3 = document.getElementById("lbl-button3");
 var buttonlbl4 = document.getElementById("lbl-button4");
-var initialsHighScore = document.getElementById("initialsHighScore");
-var secondsLeft = 10;
-var questionTracker = 0;
-var allScores = [];
-var count = 40;
 var score = 0;
-var currentQuestion = 0;
-var countDownTimer;
 var time = 45;
 var timerId;
 var myQuestionsIndex = 0;
@@ -144,13 +132,12 @@ function getAnswer() {
 }
 
 function quizEnd() {
+  var divFinal = document.getElementById("div-Final");
+  var finalScoreScreen = document.getElementById("lbl-finalscore");
   clearInterval(timerId);
-
-  var finalScoreScreen = document.getElementById("finalScore");
-  finalScoreScreen.textContent = "Your final score is " + score;
-
+  finalScoreScreen.innerText = "Your final score is " + score;
   questionBody.setAttribute("class", "hidden");
-  submitButton.removeAttribute("class");
+  divFinal.removeAttribute("class");
 }
 
 function timingInterval() {
@@ -164,19 +151,22 @@ function timingInterval() {
 }
 
 function saveHighscore() {
-  var initials = initialsHighScore;
+  var initials = document.getElementById("txt-Initials").value;
   if (initials !== "") {
     var highscores =
       JSON.parse(window.localStorage.getItem("highscores")) || [];
 
     var newScore = {
-      score: time,
+      score: score,
       initials: initials,
     };
 
     highscores.push(newScore);
     window.localStorage.setItem("highscores", JSON.stringify(highscores));
     window.location.href = "highscores.html";
+  } else {
+    var errorText = document.getElementById("lbl-error");
+    errorText.innerText = "Please enter your initials to submit your quiz.";
   }
 }
 
@@ -185,128 +175,3 @@ function check(event) {
     saveHighscore();
   }
 }
-
-// initialsEl.onkeyup = check;
-// display new time on page    timerElement.textContent = time;
-//   function nextQuestion() {
-//   for (i = 0; i < myQuestions.length; i++) {
-//     body.innerHTML = "<p>" + myQuestions[currentQuestion].question + "</p>";
-//     // button1.
-//     textContent = myQuestions[currentQuestion].answers.a;
-//     // button2.
-//     textContent = myQuestions[currentQuestion].answers.b;
-//     // button3.
-//     textContent = myQuestions[currentQuestion].answers.c;
-//     // button4.
-//     textContent = myQuestions[currentQuestion].answers.d;
-// }
-//   }
-//   nextQuestion();
-
-// function renderQuestion() {
-//   var i = currentQuestion;
-//   body.innerHTML = "<p>" + myQuestions[i].question + "</p>";
-//   button1.textContent = myQuestions[i].answers.a;
-//   button2.textContent = myQuestions[i].answers.b;
-//   button3.textContent = myQuestions[i].answers.c;
-//   button4.textContent = myQuestions[i].answers.d;
-// }
-// renderQuestion();
-
-// var answers = [];
-// for (var letter in currentQuestion.answers)
-//     {
-//         answers.push(
-//             `<label>
-//                 <input type="radio" name="questions${questionNumber}" value = "${letter}">${letter}</input> :
-//                 ${currentQuestion.answers[letter]}
-//             </label>`
-//         );
-//     }
-
-//     output.push(
-//         `<div id="quizAnswerAndQuestion${questionNumber}" style = "display: none">
-//         <div class="question"> ${currentQuestion.question} </div>
-//         <div class="answers"> ${answers.join('')} </div>
-//         </div>`
-//       ); questionNumber++;
-// });
-//   document.getElementById("quizAnswerAndQuestion" + questionTracker ).style.display = "none";
-//   questionTracker++;
-//   document.getElementById("quizAnswerAndQuestion" + questionTracker ).style.display = "block";
-// questionTracker.foreachQuestion(myQuestions);
-// output.push(
-//       `<div id="quizAnswerAndQuestion${questionNumber}" style = "display: none">`
-// var q1 = document.getElementById("question1").innerHTML += index;
-//Use question tracker to hide current <div id="quizAnswerAndQuestion${questionNumber}">
-// incriment questionTracker by 1
-// use questionTracker to show new current div
-// ); questionTracker++;
-// }
-
-//Next, since I generated the whole HTML concept for each question, I am going to join everything together and display it on the page.
-// quizContainer.innerHTML = output.join('');
-
-//Now I need to be able to show my results based on the function loop and check them.
-
-// function showResults()
-// {
-//     var answerContainers = quizContainer.querySelectorAll('.answers');
-//     var numCorrect = 0;
-//     for (var i = 0; i < myQuestions.length; i++);
-
-//     function myQuestions(currentQuestion, questionNumber)
-//     {
-
-//       var selector = `input[name='questions${questionNumber}']:checked`;
-//       var userAnswer = document.querySelector(selector);
-//       if(userAnswer.value === currentQuestion.correctAnswer)
-//       {
-//         numCorrect++;
-//         score++;
-//         userAnswer.parentElement.style.color = 'lightblue';
-//       }
-//       else
-//       {
-//         userAnswer.parentElement.style.color = 'red';
-//       }
-//     }
-
-//     resultsContainer.innerHTML = `${numCorrect} out of ${myQuestions.length}`;
-//   }
-//The quiz here must be displayed right away
-// quizBuild();
-
-// Ask tutor why this is not working.
-
-// function setTime()
-// {
-
-//   var timerInterval = setInterval(function()
-//   {
-//     secondsLeft--;
-//     timeEl.textContent = secondsLeft + " seconds left to answer the question.";
-
-//     if(secondsLeft === 0)
-//     {
-//       clearTime(timerInterval);
-//       sendMessage();
-//     }
-
-//   }, 1000);
-// }
-
-// function sendMessage()
-// {
-//   timeEl.textContent = "Time is up, try again!";
-
-//   var pEl = document.createElement("p");
-//   mainEl.appendChild(pEl);
-
-// }
-
-// setTime();
-
-// function scoreboard() {
-
-// }

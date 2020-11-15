@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>quiz display questions</title>
+    <link rel="stylesheet" href="reset.css" />
+    <link rel="stylesheet" href="quizlogic.css" />
+  </head>
+  <body>
+    <h1>Quiz - Homework</h1>
+    <div id="score"></div>
+    <button id="start" onclick="startQuiz();">Start Quiz</button>
+    <div id="questionContents" class="hidden">
+      <div id="timer"></div>
+      <div id="questions"></div>
+      <input type="radio" name="btnChoice" id="button1" value="a" />
+      <label id="lbl-button1" for="button1"></label>
+      <br />
+      <input type="radio" name="btnChoice" id="button2" value="b" />
+      <label id="lbl-button2" for="button2"></label>
+      <br />
+      <input type="radio" name="btnChoice" id="button3" value="c" />
+      <label id="lbl-button3" for="button3"></label>
+      <br />
+      <input type="radio" name="btnChoice" id="button4" value="d" />
+      <label id="lbl-button4" for="button4"></label>
+      <br />
+      <button id="btn-nextQuestion" onclick="questionClick();">
+        Next Question
+      </button>
+    </div>
+    <br />
+    <label id="lbl-error" style="color: red; font-weight: bold"></label>
+    <div id="finalScore"></div>
+    <button id="submit" class="hidden" onclick="saveHighscore();">
+      Submit Quiz
+    </button>
+    <!--TO DO: Return Home button-->
+    <script src="quizlogic.js"></script>
+  </body>
+</html>
