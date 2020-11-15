@@ -2,13 +2,10 @@ var body = document.body;
 var questionBody = document.getElementById("questionContents");
 var displayScore = document.getElementById("score");
 var quizContainer = document.getElementById("quiz");
-// var highScoresList = document.getElementById("highScoresList"); // need to refer it in JS.
 var resultsContainer = document.getElementById("results");
 var startButton = document.getElementById("start");
 var questionsElement = document.getElementById("questions");
 var submitButton = document.getElementById("submit");
-// var timeEl = document.getElementById("timer");
-// var mainEl = document.getElementById("quiz");
 var timerElement = document.getElementById("timer");
 var button1 = document.getElementById("button1");
 var button2 = document.getElementById("button2");
@@ -18,7 +15,7 @@ var buttonlbl1 = document.getElementById("lbl-button1");
 var buttonlbl2 = document.getElementById("lbl-button2");
 var buttonlbl3 = document.getElementById("lbl-button3");
 var buttonlbl4 = document.getElementById("lbl-button4");
-var initialsHighScore = document.getElementById("initialsHighScore"); // add in HTML
+var initialsHighScore = document.getElementById("initialsHighScore");
 var secondsLeft = 10;
 var questionTracker = 0;
 var allScores = [];
@@ -28,12 +25,7 @@ var currentQuestion = 0;
 var countDownTimer;
 var time = 60000;
 var timerId;
-// var time = myQuestions.length * 20;
-// var legnth =
 var myQuestionsIndex = 0;
-
-// submitButton.addEventListener("click", showResults);
-
 var myQuestions = [
   {
     question:
@@ -90,22 +82,13 @@ var myQuestions = [
   },
 ];
 
-//Next, I am showing HOW the list of questions will be displayed on the web-page.
-// Got help with tutor on this portion.
-// function quizBuild()
-// {
-
 function startQuiz() {
   questionBody.removeAttribute("class");
   timerId = setInterval(timingInterval, 1000);
   timerElement.textContent = time;
   getQuestion();
   startButton.setAttribute("class", "hidden");
-
-  //TO DO: END GUIZ IF TIMER HITS 0 (ZERO);
 }
-// var output = [];
-// var questionNumber = 0;
 
 function getQuestion() {
   var cQuestion = myQuestions[myQuestionsIndex];
@@ -120,8 +103,12 @@ function getQuestion() {
 
 function questionClick() {
   var userAnswer = getAnswer();
-
-  if (userAnswer !== myQuestions[myQuestionsIndex].answer) {
+  var errorText = document.getElementById("lbl-error");
+  errorText.innerText = "";
+  if (userAnswer === "") {
+    errorText.innerText = "Please select an answer.";
+  }
+  if (userAnswer !== myQuestions[myQuestionsIndex].correctAnswer) {
     time -= 15;
     if (time < 0) {
       time = 0;
@@ -145,6 +132,7 @@ function getAnswer() {
 
   for (var i = 0, length = radios.length; i < length; i++) {
     if (radios[i].checked) {
+      radios[i].checked = false;
       return radios[i].value;
     }
   }
@@ -185,7 +173,6 @@ function saveHighscore() {
     window.localStorage.setItem("highscores", JSON.stringify(highscores));
     window.location.href = "highscores.html";
   }
-  // button.addEventListener('click', saveHighscore);
 }
 
 function check(event) {
