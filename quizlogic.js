@@ -7,7 +7,6 @@ var resultsContainer = document.getElementById("results");
 var startButton = document.getElementById("start");
 var questionsElement = document.getElementById("questions");
 var submitButton = document.getElementById("submit");
-var choiceElement = document.getElementById("choices"); // need to call this in the document somewhere
 // var timeEl = document.getElementById("timer");
 // var mainEl = document.getElementById("quiz");
 var timerElement = document.getElementById("timer");
@@ -15,8 +14,11 @@ var button1 = document.getElementById("button1");
 var button2 = document.getElementById("button2");
 var button3 = document.getElementById("button3");
 var button4 = document.getElementById("button4");
-var buttonChoices = document.getElementById("buttonChoices");
-var initialsElement = document.getElementById("initials"); // add in HTML
+var buttonlbl1 = document.getElementById("lbl-button1");
+var buttonlbl2 = document.getElementById("lbl-button2");
+var buttonlbl3 = document.getElementById("lbl-button3");
+var buttonlbl4 = document.getElementById("lbl-button4");
+var initialsHighScore = document.getElementById("initialsHighScore"); // add in HTML
 var returnFeedback = document.getElementById("feedback"); // add in HTML
 var secondsLeft = 10;
 var questionTracker = 0;
@@ -92,36 +94,27 @@ var myQuestions = [
 
 function startQuiz() 
 {
-  // var startScreenEl = document.getElementById("start-screen");
-  // startScreenEl.setAttribute("class", "hide");
-  questionsElement.removeAttribute("class");
+  questionBody.removeAttribute("class");
   timerId = setInterval(timingInterval, 1000);
   timerElement.textContent = time;
-}
+  getQuestion();
+  startButton.setAttribute("class", "hidden" );
 
+  //TO DO: END GUIZ IF TIMER HITS 0 (ZERO);
+}
 // var output = [];
 // var questionNumber = 0;
 
 function getQuestion() 
 {
   var cQuestion = myQuestions[myQuestionsIndex];
-
-cQuestion.forEach(function(choiceA, i) 
-{
-
-  var userChoice = document.getElementById('buttons');
-  userChoice.setAttribute("class","choice");
-  userChoice.setAttribute("value", choiceA);
-
-  var title = document.getElementById("buttonChoices");
-  title.innerHTML = '';
-
-  userChoice.textContent = i + 1 + '. ' + userChoice.textContent;
-
-  userChoice.onclick = questionClick;
-
-  choiceElement.appendChild(userChoice);
-  });
+  
+  buttonlbl1.innerText = cQuestion.answers.a;
+  buttonlbl2.innerText = cQuestion.answers.b;
+  buttonlbl3.innerText = cQuestion.answers.c;
+  buttonlbl4.innerText = cQuestion.answers.d;
+  
+  questionsElement.textContent = cQuestion.question;
 }
 
 function questionClick() 
@@ -161,7 +154,7 @@ function questionClick()
     var finalScoreScreen = document.getElementById("finalScore");
   finalScoreScreen.textContent = time;
 
-    questionsElement.setAttribute("class", "hide");
+    // questionsElement.setAttribute("class", "hide");
 }
 
 function timingInterval() 
@@ -176,7 +169,7 @@ function timingInterval()
 
 function saveHighscore() 
 {
-  var initials = initialsElement;
+  var initials = initialsHighScore;
   if (initials !== "") 
   {
     var highscores =
@@ -202,10 +195,6 @@ function check(event)
     saveHighscore();
   }
 }
-
-submitButton.onclick = saveHighscore;
-
-startButton.onclick = startQuiz;
 
 // initialsEl.onkeyup = check;
     // display new time on page    timerElement.textContent = time;

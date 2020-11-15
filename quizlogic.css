@@ -16,6 +16,9 @@ h1{
   background-color: #444;
   color: #fff;
 }
+.hidden {
+  display: none;
+}
 .question{
   font-size: 30px;
   margin-bottom: 10px;
