@@ -1,6 +1,7 @@
 var questionBody = document.getElementById("questionContents");
 var startButton = document.getElementById("start");
 var questionsElement = document.getElementById("questions");
+var submitButton = document.getElementById("submit");
 var timerElement = document.getElementById("timer");
 var button1 = document.getElementById("button1");
 var button2 = document.getElementById("button2");
@@ -151,7 +152,8 @@ function timingInterval() {
 }
 
 function saveHighscore() {
-  var initials = document.getElementById("txt-Initials").value;
+  var initialsElement = document.getElementById("txt-Initials");
+  var initials = initialsElement.value;
   if (initials !== "") {
     var highscores =
       JSON.parse(window.localStorage.getItem("highscores")) || [];
@@ -165,9 +167,10 @@ function saveHighscore() {
     window.localStorage.setItem("highscores", JSON.stringify(highscores));
     // This redirect is used to display highscores.
     // window.location.href = "highscores.html";
-    var divFinal = document.getElementById("div-Final");
     var homeLink = document.getElementById("home");
-    divFinal.setAttribute("class", "hidden");
+    homeLink.style.display = "inline-block";
+    initialsElement.setAttribute("disabled", "disabled");
+    submitButton.setAttribute("disabled", "disabled");
   } else {
     var errorText = document.getElementById("lbl-error");
     errorText.innerText = "Please enter your initials to submit your quiz.";

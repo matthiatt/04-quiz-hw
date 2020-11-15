@@ -10,7 +10,7 @@
 
   <body>
     <h1>Quiz - Homework</h1>
-    <button id="start" onclick="startQuiz();">Start Quiz</button>
+    <button id="start" class="btn" onclick="startQuiz();">Start Quiz</button>
     <div id="questionContents" class="hidden">
       <div id="timer"></div>
       <div id="questions"></div>
@@ -26,7 +26,7 @@
       <input type="radio" name="btnChoice" id="button4" value="d" />
       <label id="lbl-button4" for="button4"></label>
       <br />
-      <button id="btn-nextQuestion" onclick="questionClick();">
+      <button id="btn-nextQuestion" class="btn" onclick="questionClick();">
         Next Question
       </button>
     </div>
@@ -37,7 +37,9 @@
       <br />
       Enter your initials: <input type="text" id="txt-Initials" maxlength="3" />
       <br />
-      <button id="submit" onclick="saveHighscore();">Submit Quiz</button>
+      <button id="submit" class="btn" onclick="saveHighscore();">
+        Submit Quiz
+      </button>
     </div>
     <a id="home" class="btn" href="index.html" style="display: none">Home</a>
     <script src="quizlogic.js"></script>

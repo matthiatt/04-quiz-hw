@@ -32,7 +32,7 @@ h1{
   display: block;
   margin-bottom: 10px;
 }
-button{
+/* button{
   font-family: 'Work Sans', sans-serif;
 	font-size: 22px;
 	background-color: #279;
@@ -45,4 +45,30 @@ button{
 }
 button:hover{
 	background-color: #38a;
+} */
+.btn:disabled {
+  background-color: rgb(231, 25, 25);
+  cursor: not-allowed;
 }
+.btn {
+    width: 20rem;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-family: 'Work Sans',
+    sans-serif;
+    font-size: 22px;
+    background-color: #279;
+    color: #fff;
+    border: 0px;
+    border-radius: 3px;
+    padding: 20px;
+    cursor: pointer;
+    margin: 20px 0;
+  }
+.btn:hover {
+    box-shadow: 0 0.4rem 1.4rem 0 #38a;
+    transform: translateY(-0.1rem);
+    transition: transform 150ms;
+  }
+  
